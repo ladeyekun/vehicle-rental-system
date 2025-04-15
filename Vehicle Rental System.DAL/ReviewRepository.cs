@@ -1,34 +1,48 @@
 ﻿using Vehicle_Rental_System.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Vehicle_Rental_System.DAL {
-    public class ReviewRepository {
+namespace Vehicle_Rental_System.DAL
+{
+    public class ReviewRepository
+    {
         private readonly VehicleRentalSystemDbContext _context;
 
-        public ReviewRepository(VehicleRentalSystemDbContext context) {
+        public ReviewRepository(VehicleRentalSystemDbContext context)
+        {
             _context = context;
         }
 
-        public List<Review> GetReviews() {
-            return _context.Reviews.ToList();
+        public async Task<List<Review>> GetReviewsAsync()
+        {
+            return await _context.Reviews.ToListAsync();
         }
 
-        public Review GetReview(int id) {
-            return _context.Reviews.Find(id);
+        public async Task<Review> GetReviewAsync(int id)
+        {
+            return await _context.Reviews.FindAsync(id);
         }
 
-        public void AddReview(Review review) {
-            _context.Reviews.Add(review);
-            _context.SaveChanges();
+        public async Task AddReviewAsync(Review review)
+        {
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
         }
-        public void UpdateReview(Review review) {
+
+        public async Task UpdateReviewAsync(Review review)
+        {
             _context.Reviews.Update(review);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void DeleteReview(int id) {
-            Review review = _context.Reviews.Find(id);
-            if (review != null) {
+
+        public async Task DeleteReviewAsync(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+            if (review != null)
+            {
                 _context.Reviews.Remove(review);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

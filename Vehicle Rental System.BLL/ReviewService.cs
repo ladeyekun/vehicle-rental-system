@@ -1,5 +1,8 @@
 ﻿using Vehicle_Rental_System.DAL;
 using Vehicle_Rental_System.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Vehicle_Rental_System.BLL
 {
@@ -12,30 +15,30 @@ namespace Vehicle_Rental_System.BLL
             _reviewRepository = reviewRepository;
         }
 
-        public List<Review> GetAllReviews()
+        public async Task<List<Review>> GetAllReviewsAsync()
         {
-            return _reviewRepository.GetReviews();
+            return await _reviewRepository.GetReviewsAsync();
         }
 
-        public Review GetReviewById(int id)
+        public async Task<Review> GetReviewByIdAsync(int id)
         {
-            return _reviewRepository.GetReview(id);
+            return await _reviewRepository.GetReviewAsync(id);
         }
 
-        public void CreateReview(Review review)
+        public async Task CreateReviewAsync(Review review)
         {
             review.ReviewDate = DateTime.Now;
-            _reviewRepository.AddReview(review);
+            await _reviewRepository.AddReviewAsync(review);
         }
 
-        public void UpdateReview(Review review)
+        public async Task UpdateReviewAsync(Review review)
         {
-            _reviewRepository.UpdateReview(review);
+            await _reviewRepository.UpdateReviewAsync(review);
         }
 
-        public void DeleteReview(int id)
+        public async Task DeleteReviewAsync(int id)
         {
-            _reviewRepository.DeleteReview(id);
+            await _reviewRepository.DeleteReviewAsync(id);
         }
     }
 }
