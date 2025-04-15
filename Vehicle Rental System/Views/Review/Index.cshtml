@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Vehicle_Rental_System.Model.Review>
+
+@{
+    ViewBag.Title = "Review List";
+}
+
+<h2>Review List</h2>
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Review</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Review Id</th>
+            <th>Message</th>
+            <th>Reservation Id</th>
+            <th>Review Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.ReviewId</td>
+                <td>@review.Message</td>
+                <td>@review.ReservationId</td>
+                <td>@review.ReviewDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@review.ReviewId" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@review.ReviewId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@review.ReviewId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

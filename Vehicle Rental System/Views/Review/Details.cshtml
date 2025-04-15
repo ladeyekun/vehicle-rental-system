@@ -1,0 +1,21 @@
+﻿@model Vehicle_Rental_System.Model.Review
+
+@{
+    ViewBag.Title = "Review Details";
+}
+
+<h2>Review Details</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>Review ID</dt>
+    <dd>@Model.ReviewId</dd>
+    <dt>Message</dt>
+    <dd>@Model.Message</dd>
+    <dt>Reservation ID</dt>
+    <dd>@Model.ReservationId</dd>
+    <dt>Review Date</dt>
+    <dd>@Model.ReviewDate</dd>
+</dl>
+<hr />
+<a asp-action="Edit" asp-route-id="@Model.ReviewId" class="btn btn-warning">Edit</a> |
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
