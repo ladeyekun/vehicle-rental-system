@@ -9,7 +9,7 @@ namespace Vehicle_Rental_System.BLL {
         public PaymentService(PaymentRepository paymentRepository) {
             _paymentRepository = paymentRepository;
         }
-    }
+        
         public List<Payment> GetPayments() {
             return _paymentRepository.GetPayments();
         }
