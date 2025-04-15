@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Vehicle_Rental_System.Model.Location>
+
+@{
+    ViewBag.Title = "Location List";
+}
+
+<h2>Location List</h2>
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Location</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Location Id</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loc in Model)
+        {
+            <tr>
+                <td>@loc.LocationId</td>
+                <td>@loc.Name</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@loc.LocationId" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@loc.LocationId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@loc.LocationId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
