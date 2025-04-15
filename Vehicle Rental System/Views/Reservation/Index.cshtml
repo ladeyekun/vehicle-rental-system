@@ -1,0 +1,33 @@
+﻿@using Vehicle_Rental_System.Model
+@model IEnumerable<Reservation>
+
+<h2>Reservation List</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Reservation ID</th>
+			<th>Customer Name</th>
+			<th>Vehicle Details</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(Reservation reservation in Model){
+			<tr>
+				<td>@reservation.ReservationId</td>
+				<td>@reservation.Customer.CustomerName</td>
+				<td>@reservation.Vehicle.Brand -  @reservation.Vehicle.Model</td>
+				<td>@reservation.StartDate.ToString("MMM dd yyyy")</td>
+				<td>@reservation.EndDate.ToString("MMM dd yyyy")</td>
+				<td>
+					<a class="btn btn-primary" href="@Url.Action("Edit", new { id = reservation.ReservationId })">Edit</a>
+					<a class="btn btn-secondary" href="@Url.Action("Detail", new { id = reservation.ReservationId })">Detail</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<a class="btn btn-success" href="@Url.Action("Create")">Add new reservation</a>

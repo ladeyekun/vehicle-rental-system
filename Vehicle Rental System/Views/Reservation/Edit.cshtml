@@ -1,0 +1,39 @@
+﻿@using Vehicle_Rental_System.Model
+@using Vehicle_Rental_System.Model.ViewModel
+@model ReservationViewModel
+
+<h1 class="mb-4">@ViewBag.Title</h1>
+<div class="col-md-6">
+    <form asp-action="Edit" class="form-horizontal p-4 bg-light rounded shadow-sm">
+        <div class="mb-3">
+            <h4>Select Customer</h4>
+            <input type="hidden" asp-for="ReservationId" />
+            @Html.DropDownListFor(model => model.SelectedCustomerId, Model.Customers, "Select a customer", new { @class = "form-control" })
+        </div>
+        <div class="mb-3">
+            <h4>Select Customer</h4>
+            @Html.DropDownListFor(model => model.SelectedVehicleId, Model.Vehicles, "Select a vehicle", new { @class = "form-control" })
+        </div>
+        <div class="mb-3">
+            <label asp-for="StartDate" class="form-label fw-bold"></label>
+            <input asp-for="StartDate" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="EndDate" class="form-label fw-bold"></label>
+            <input asp-for="EndDate" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label fw-bold"></label>
+            <input asp-for="Status" class="form-control" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Edit Reservation</button>
+        </div>
+    </form>
+

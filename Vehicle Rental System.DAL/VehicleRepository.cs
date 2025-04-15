@@ -1,4 +1,5 @@
-﻿using Vehicle_Rental_System.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
     public class VehicleRepository {
@@ -8,8 +9,8 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        public List<Vehicle> GetVehicles() {
-            return _context.Vehicles.ToList();
+        public async Task<List<Vehicle>> GetVehicles() {
+            return await _context.Vehicles.ToListAsync();
         }
 
         public List<Vehicle> GetVehicles(int LocationId) {

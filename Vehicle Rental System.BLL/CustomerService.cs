@@ -9,8 +9,8 @@ namespace Vehicle_Rental_System.BLL {
         public CustomerService(CustomerRepository customerRepository) {
             _customerRepository = customerRepository;
         }
-        public List<Customer> GetCustomers() {
-            return _customerRepository.GetCustomers();
+        public async Task<List<Customer>> GetCustomers() {
+            return await _customerRepository.GetCustomers();
         }
 
         public Customer GetCustomer(int id) {

@@ -1,0 +1,12 @@
+﻿@using Vehicle_Rental_System.Model
+@model Reservation
+
+<h2>@ViewBag.Title</h2>
+<p><strong>Customer: </strong>@Model.Customer.CustomerName</p>
+<p><strong>Vehicle: </strong>@Model.Vehicle.Brand - @Model.Vehicle.Model</p>
+<p><strong>Date: </strong>From @Model.StartDate.ToString("MMM dd yyyy") - @Model.EndDate.ToString("MMM dd yyyy")</p>
+
+
+<a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.ReservationId })">Edit Reservation</a>
+<a class="btn btn-success" href="@Url.Action("Pay", "Payment", new { id = Model.ReservationId })">Make Payment</a>
+<a class="btn btn-secondary" href="@Url.Action("Index")">View Reservations</a>

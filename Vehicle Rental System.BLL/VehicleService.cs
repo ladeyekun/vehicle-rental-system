@@ -9,8 +9,8 @@ namespace Vehicle_Rental_System.BLL {
         public VehicleService(VehicleRepository vehicleRepository) {
             _vehicleRepository = vehicleRepository;
         }
-        public List<Vehicle> GetVehicles() {
-            return _vehicleRepository.GetVehicles();
+        public async Task<List<Vehicle>> GetVehicles() {
+            return await _vehicleRepository.GetVehicles();
         }
 
         public List<Vehicle> GetVehicles(int LocationId) {

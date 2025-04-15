@@ -48,7 +48,7 @@ namespace Vehicle_Rental_System
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Reservation}/{action=Index}/{id?}");
 
             app.Run();
         }
