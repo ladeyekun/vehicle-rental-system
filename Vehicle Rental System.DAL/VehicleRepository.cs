@@ -10,17 +10,8 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        // Get All Vehicle
-
-        public async Task<List<Vehicle>> GetAllAsync()
-        {
-            List<Vehicle> vehicles = await _context.Vehicles
-                .Include(v => v.Reservations)
-                .Include(v => v.Histories)
-                .Include(v => v.Location)
-                .ToListAsync();
-
-            return vehicles;
+        public async Task<List<Vehicle>> GetVehicles() {
+            return await _context.Vehicles.ToListAsync();
         }
 
         // Get Vehicle By Assigned Id

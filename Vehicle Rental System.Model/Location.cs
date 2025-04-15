@@ -2,5 +2,7 @@
     public class Location {
         public int LocationId { get; set; }
         public string Name { get; set; }
+
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

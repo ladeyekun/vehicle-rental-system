@@ -36,8 +36,13 @@ namespace Vehicle_Rental_System.DAL {
             modelBuilder.Entity<Reservation>()
                 .HasOne(c => c.Customer)
                 .WithMany(r => r.Reservations)
-                .HasForeignKey(r => r.CustomerId)
+                .HasForeignKey(c => c.CustomerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(v => v.Vehicle)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(v => v.VehicleId);
 
             modelBuilder.Entity<History>()
                 .HasOne(c => c.Customer)
@@ -55,11 +60,6 @@ namespace Vehicle_Rental_System.DAL {
                 .HasOne(r => r.Reservation)
                 .WithOne(rs => rs.Review)
                 .HasForeignKey<Review>(r => r.ReservationId);
-
-            modelBuilder.Entity<Reservation>()
-                .HasOne(v => v.Vehicle)
-                .WithMany(r => r.Reservations)
-                .HasForeignKey(r => r.VehicleId);
 
             modelBuilder.Entity<Payment>()
                 .HasOne(r => r.Reservation)

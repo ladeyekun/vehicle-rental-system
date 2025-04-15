@@ -11,16 +11,8 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        // Get All Customer
-
-        public async Task<List<Customer>> GetAllAsync()
-        {
-            List<Customer> customers = await _context.Customers
-                .Include(c => c.Reservations)
-                .Include(c => c.Histories)
-                .ToListAsync();
-
-            return customers;
+        public async Task<List<Customer>> GetCustomers() {
+            return await _context.Customers.ToListAsync();
         }
 
         // Get Customer By Id
