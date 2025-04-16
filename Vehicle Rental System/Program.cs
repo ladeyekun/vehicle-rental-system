@@ -1,6 +1,7 @@
 using Vehicle_Rental_System.DAL;
 using Microsoft.EntityFrameworkCore;
 using Vehicle_Rental_System.BLL;
+using Microsoft.AspNetCore.Identity;
 
 namespace Vehicle_Rental_System
 {
@@ -15,6 +16,10 @@ namespace Vehicle_Rental_System
 
             builder.Services.AddDbContext<VehicleRentalSystemDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>() // Add support for roles
+                .AddEntityFrameworkStores<VehicleRentalSystemDbContext>();
 
             builder.Services.AddScoped<CustomerRepository>();
             builder.Services.AddScoped<VehicleRepository>();
@@ -35,6 +40,9 @@ namespace Vehicle_Rental_System
 
             var app = builder.Build();
 
+            // Seed roles and admin user here
+            SeedRolesAndAdminUserAsync(app.Services).GetAwaiter().GetResult();
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -44,6 +52,7 @@ namespace Vehicle_Rental_System
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -52,5 +61,32 @@ namespace Vehicle_Rental_System
 
             app.Run();
         }
+
+        static async Task SeedRolesAndAdminUserAsync(IServiceProvider serviceProvider) {
+            using (IServiceScope scope = serviceProvider.CreateScope()) {
+                RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+                // Define roles
+                string[] roles = { "Admin", "Employee", "Customer" };
+                foreach (string role in roles) {
+                    if (!await roleManager.RoleExistsAsync(role)) {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+
+                // Create an admin user
+                IdentityUser adminUser = new IdentityUser {
+                    UserName = "admin@abc.com",
+                    Email = "admin@abc.com",
+                    EmailConfirmed = true
+                };
+                if (await userManager.FindByEmailAsync(adminUser.Email) == null) {
+                    await userManager.CreateAsync(adminUser, "AdminPassword123!");
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+        }
+
     }
 }

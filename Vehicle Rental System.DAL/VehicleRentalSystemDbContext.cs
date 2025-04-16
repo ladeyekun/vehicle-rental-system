@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
-    public class VehicleRentalSystemDbContext : DbContext{
+    public class VehicleRentalSystemDbContext : IdentityDbContext<IdentityUser> {
         public VehicleRentalSystemDbContext(DbContextOptions<VehicleRentalSystemDbContext> options) : base(options) { }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<History> Histories { get; set; }
@@ -61,10 +63,10 @@ namespace Vehicle_Rental_System.DAL {
                 .WithOne(rs => rs.Review)
                 .HasForeignKey<Review>(r => r.ReservationId);
 
-            modelBuilder.Entity<Payment>()
-                .HasOne(r => r.Reservation)
-                .WithOne(p => p.Payment)
-                .HasForeignKey<Payment>(p => p.PaymentId);
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Payment)
+                .WithOne(p => p.Reservation)
+                .HasForeignKey<Payment>(p => p.ReservationId);
 
             modelBuilder.Entity<Customer>(entity => {
                 entity.Property(e => e.CustomerName).IsRequired().HasMaxLength(50);
