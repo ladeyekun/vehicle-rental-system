@@ -8,11 +8,8 @@
         <tr>
             <th>Start Date</th>
             <th>End Date</th>
-            @* <th>Distance</th> *@
-            @* <th>User ID</th> *@
             <th>Vehicle ID</th>
             <th>Customer ID</th>
-            @* <th>Actions</th> *@
         </tr>
     </thead>
     <tbody>
@@ -21,7 +18,6 @@
             <tr>
                 <td>@rentalHistory.StartDate.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>@rentalHistory.EndDate.ToString("yyyy-MM-dd HH:mm")</td>
-                @* <td>@history.Distance</td> *@
                 <td>@rentalHistory.CustomerId</td>
                 <td>@rentalHistory.VehicleId</td>
                 <td>
