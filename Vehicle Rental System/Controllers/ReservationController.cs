@@ -42,6 +42,7 @@ namespace Vehicle_Rental_System.Controllers {
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ReservationViewModel model) {
             if (ModelState.IsValid) {
                 Reservation reservation = new Reservation {
@@ -119,6 +120,7 @@ namespace Vehicle_Rental_System.Controllers {
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ReservationViewModel model) {
             Reservation reservation = await _reservationService.GetReservation(id);
             if (reservation == null) {
@@ -159,6 +161,16 @@ namespace Vehicle_Rental_System.Controllers {
                 }).ToList()
             };
             return View(reservationViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id) {
+            Reservation reservation = await _reservationService.GetReservation(id);
+            if (reservation == null) {
+                return NotFound();
+            }
+            _reservationService.DeleteReservation(id);
+            return RedirectToAction("Index");
         }
     }
 }
