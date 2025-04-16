@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Vehicle Rental System.Model\Vehicle Rental System.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Vehicle\" />
+  </ItemGroup>
+
 </Project>

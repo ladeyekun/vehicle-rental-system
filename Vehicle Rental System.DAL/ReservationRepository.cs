@@ -1,4 +1,5 @@
-﻿using Vehicle_Rental_System.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
     public class ReservationRepository {
@@ -8,27 +9,51 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        public List<Reservation> GetReservations() {
-            return _context.Reservations.ToList();
+        public async Task<List<Reservation>> GetReservations() {
+            return await _context.Reservations
+                .Include(c => c.Customer)
+                .Include(v => v.Vehicle)
+                .Include(rv => rv.Review)
+                .Include(p => p.Payment)
+                .ToListAsync();
         }
 
-        public Reservation GetReservation(int id) {
-            return _context.Reservations.Find(id);
+        public async Task<Reservation> GetReservation(int id) {
+            return await _context.Reservations
+                .Include(c => c.Customer)
+                .Include(v => v.Vehicle)
+                .Include(rv => rv.Review)
+                .Include(p => p.Payment)
+                .SingleOrDefaultAsync(r => r.ReservationId == id);
         }
 
-        public void AddReservation(Reservation reservation) {
+        public async Task AddReservation(Reservation reservation) {
             _context.Reservations.Add(reservation);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void UpdateReservation(Reservation reservation) {
-            _context.Reservations.Update(reservation);
-            _context.SaveChanges();
+        public async Task UpdateReservation(Reservation reservation) {
+            Reservation existingReservation = await _context.Reservations.FindAsync(reservation.ReservationId);
+
+            if (existingReservation  == null) {
+                throw new Exception("Reservation not found");
+            }
+            existingReservation.CustomerId = reservation.CustomerId;
+            existingReservation.VehicleId = reservation.VehicleId;
+            existingReservation.StartDate = reservation.StartDate;
+            existingReservation.EndDate = reservation.EndDate;
+            existingReservation.Status = reservation.Status;
+
+            await _context.SaveChangesAsync();
         }
-        public void DeleteReservation(int id) {
-            Reservation reservation = _context.Reservations.Find(id);
-            if (reservation != null) {
-                _context.Reservations.Remove(reservation);
-                _context.SaveChanges();
+        public async Task DeleteReservation(int id) {
+            Reservation existingReservation = await _context.Reservations.FindAsync(id);
+
+            if (existingReservation == null) {
+                throw new Exception("Reservation not found");
+            }
+            if (existingReservation != null) {
+                _context.Reservations.Remove(existingReservation);
+                await _context.SaveChangesAsync();
             }
         }
     }

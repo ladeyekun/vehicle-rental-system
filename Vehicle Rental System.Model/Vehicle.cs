@@ -16,6 +16,7 @@
         public Location Location { get; set; }
         public ICollection<History> Histories { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<Payment> Payments { get; set; }
 
     }
 }

@@ -9,22 +9,22 @@ namespace Vehicle_Rental_System.BLL {
         public ReservationService(ReservationRepository reservationRepository) {
             _reservationRepository = reservationRepository;
         }
-        public List<Reservation> GetReservations() {
-            return _reservationRepository.GetReservations();
+        public async Task<List<Reservation>> GetReservations() {
+            return await _reservationRepository.GetReservations();
         }
 
-        public Reservation GetReservation(int id) {
-            return _reservationRepository.GetReservation(id);
+        public async Task<Reservation> GetReservation(int id) {
+            return await _reservationRepository.GetReservation(id);
         }
 
-        public void AddReservation(Reservation reservation) {
-            _reservationRepository.AddReservation(reservation);
+        public async Task AddReservation(Reservation reservation) {
+            await _reservationRepository.AddReservation(reservation);
         }
-        public void UpdateReservation(Reservation reservation) {
-            _reservationRepository.UpdateReservation(reservation);
+        public async Task UpdateReservation(Reservation reservation) {
+            await _reservationRepository.UpdateReservation(reservation);
         }
-        public void DeleteReservation(int id) {
-            _reservationRepository.DeleteReservation(id);
+        public async Task DeleteReservation(int id) {
+            await _reservationRepository.DeleteReservation(id);
         }
 
     }

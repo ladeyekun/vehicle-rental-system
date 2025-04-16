@@ -1,40 +1,57 @@
-﻿using Vehicle_Rental_System.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
     public class VehicleRepository {
         private readonly VehicleRentalSystemDbContext _context;
 
-        public VehicleRepository(VehicleRentalSystemDbContext context) {
+        public VehicleRepository(VehicleRentalSystemDbContext context)
+        {
             _context = context;
         }
 
-        public List<Vehicle> GetVehicles() {
-            return _context.Vehicles.ToList();
+        public async Task<List<Vehicle>> GetVehicles() {
+            return await _context.Vehicles.ToListAsync();
         }
 
-        public List<Vehicle> GetVehicles(int LocationId) {
-            return _context.Vehicles
-                .Where(v => v.LocationId == LocationId)
-                .ToList();
+        // Get Vehicle By Assigned Id
+
+        public async Task<Vehicle> GetByIdAsync(int id)
+        {
+            Vehicle vehicle = await _context.Vehicles
+                .Include(v => v.Reservations)
+                .Include(v => v.Histories)
+                .Include(v => v.Location)
+                .FirstOrDefaultAsync(v => v.VehicleId == id);
+
+            return vehicle;
         }
 
-        public Vehicle GetVehicle(int vehicleId) {
-            return _context.Vehicles.Find(vehicleId);
+        // Add New Vehicle
+
+        public async Task AddAsync(Vehicle vehicle)
+        {
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
         }
 
-        public void AddVehicle(Vehicle vehicle) {
-            _context.Vehicles.Add(vehicle);
-            _context.SaveChanges();
-        }
-        public void UpdateVehicle(Vehicle vehicle) {
+        // Update Vehicle Info
+
+        public async Task UpdateAsync(Vehicle vehicle)
+        {
             _context.Vehicles.Update(vehicle);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void DeleteVehicle(int vehicleId) {
-            Vehicle vehicle = _context.Vehicles.Find(vehicleId);
-            if (vehicle != null) {
+
+        // Delete Vehicle
+
+        public async Task DeleteAsync(int id)
+        {
+            Vehicle vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle != null)
+            {
                 _context.Vehicles.Remove(vehicle);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
