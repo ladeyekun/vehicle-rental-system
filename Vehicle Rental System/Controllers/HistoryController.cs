@@ -42,7 +42,7 @@ namespace Vehicle_Rental_System.Controllers {
                 }
             }
             ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
@@ -54,7 +54,7 @@ namespace Vehicle_Rental_System.Controllers {
                 return NotFound();
             }
             ViewBag.Users = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
@@ -77,7 +77,7 @@ namespace Vehicle_Rental_System.Controllers {
                     await _historyService.UpdateHistoryAsync(oldHistory);
 
                     ViewBag.Customers = _customerService.GetCustomers();
-                    ViewBag.Vehicles = _vehicleService.GetVehicles();
+                    ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
                     ViewBag.SuccessMessage = "History updated successfully!";
                     return View(oldHistory);
                 }
@@ -87,7 +87,7 @@ namespace Vehicle_Rental_System.Controllers {
             }
 
             ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
