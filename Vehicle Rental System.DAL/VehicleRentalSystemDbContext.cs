@@ -63,10 +63,10 @@ namespace Vehicle_Rental_System.DAL {
                 .WithOne(rs => rs.Review)
                 .HasForeignKey<Review>(r => r.ReservationId);
 
-            modelBuilder.Entity<Reservation>()
-                .HasOne(r => r.Payment)
-                .WithOne(p => p.Reservation)
-                .HasForeignKey<Payment>(p => p.ReservationId);
+            modelBuilder.Entity<Payment>()
+                .HasOne(r => r.Reservation)
+                .WithOne(p => p.Payment)
+                .HasForeignKey<Payment>(p => p.PaymentId);
 
             modelBuilder.Entity<Customer>(entity => {
                 entity.Property(e => e.CustomerName).IsRequired().HasMaxLength(50);

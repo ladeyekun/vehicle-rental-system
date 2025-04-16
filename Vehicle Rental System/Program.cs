@@ -59,6 +59,8 @@ namespace Vehicle_Rental_System
                 name: "default",
                 pattern: "{controller=Reservation}/{action=Index}/{id?}");
 
+            app.MapRazorPages();
+
             app.Run();
         }
 
@@ -68,7 +70,7 @@ namespace Vehicle_Rental_System
                 UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
                 // Define roles
-                string[] roles = { "Admin", "Employee", "Customer" };
+                string[] roles = { "Admin", "Support", "Customer" };
                 foreach (string role in roles) {
                     if (!await roleManager.RoleExistsAsync(role)) {
                         await roleManager.CreateAsync(new IdentityRole(role));
