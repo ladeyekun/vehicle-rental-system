@@ -24,8 +24,8 @@ namespace Vehicle_Rental_System.Controllers {
         [HttpGet]
         public async Task<IActionResult> Create() {
             ViewBag.Title = "Create Reservation";
-            List<Customer> customers = await _customerService.GetCustomers();
-            List<Vehicle> vehicles = await _vehicleService.GetVehicles();
+            List<Customer> customers = await _customerService.GetAllCustomersAsync();
+            List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
 
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
                 Customers = customers.Select(c => new SelectListItem {
@@ -63,8 +63,8 @@ namespace Vehicle_Rental_System.Controllers {
 
 
                 ViewBag.Title = "Create Reservation";
-                List<Customer> customers = await _customerService.GetCustomers();
-                List<Vehicle> vehicles = await _vehicleService.GetVehicles();
+                List<Customer> customers = await _customerService.GetAllCustomersAsync();
+                List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
 
                 ReservationViewModel reservationViewModel = new ReservationViewModel() {
                     Customers = customers.Select(c => new SelectListItem {
@@ -97,8 +97,8 @@ namespace Vehicle_Rental_System.Controllers {
                 return NotFound();
             }
             ViewBag.Title = "Edit Reservation";
-            List<Customer> customers = await _customerService.GetCustomers();
-            List<Vehicle> vehicles = await _vehicleService.GetVehicles();
+            List<Customer> customers = await _customerService.GetAllCustomersAsync();
+            List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
 
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
                 ReservationId = reservation.ReservationId,
@@ -142,8 +142,8 @@ namespace Vehicle_Rental_System.Controllers {
             }
 
             ViewBag.Title = "Edit Reservation";
-            List<Customer> customers = await _customerService.GetCustomers();
-            List<Vehicle> vehicles = await _vehicleService.GetVehicles();
+            List<Customer> customers = await _customerService.GetAllCustomersAsync();
+            List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
                 ReservationId = id,
                 SelectedCustomerId = model.SelectedCustomerId,

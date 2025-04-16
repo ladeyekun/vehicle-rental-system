@@ -23,9 +23,9 @@ namespace Vehicle_Rental_System.Controllers {
 
         //[Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Create() {
-            ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+        public async Task<IActionResult> Create() {
+            ViewBag.Customers = await _customerService.GetAllCustomersAsync();
+            ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
             return View();
         }
 
@@ -41,8 +41,8 @@ namespace Vehicle_Rental_System.Controllers {
                     ModelState.AddModelError("Error", ex.Message);
                 }
             }
-            ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Customers = await _customerService.GetAllCustomersAsync();
+            ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
@@ -53,8 +53,8 @@ namespace Vehicle_Rental_System.Controllers {
             if (history == null) {
                 return NotFound();
             }
-            ViewBag.Users = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Users = await _customerService.GetAllCustomersAsync();
+            ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
@@ -76,8 +76,8 @@ namespace Vehicle_Rental_System.Controllers {
 
                     await _historyService.UpdateHistoryAsync(oldHistory);
 
-                    ViewBag.Customers = _customerService.GetCustomers();
-                    ViewBag.Vehicles = _vehicleService.GetVehicles();
+                    ViewBag.Customers = await _customerService.GetAllCustomersAsync();
+                    ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
                     ViewBag.SuccessMessage = "History updated successfully!";
                     return View(oldHistory);
                 }
@@ -86,8 +86,8 @@ namespace Vehicle_Rental_System.Controllers {
                 }
             }
 
-            ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehicles();
+            ViewBag.Customers = await _customerService.GetAllCustomersAsync();
+            ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
             return View(history);
         }
 
