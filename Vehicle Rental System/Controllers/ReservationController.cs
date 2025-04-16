@@ -160,5 +160,15 @@ namespace Vehicle_Rental_System.Controllers {
             };
             return View(reservationViewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id) {
+            Reservation reservation = await _reservationService.GetReservation(id);
+            if (reservation == null) {
+                return NotFound();
+            }
+            _reservationService.DeleteReservation(id);
+            return RedirectToAction("Index");
+        }
     }
 }

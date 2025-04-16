@@ -5,6 +5,7 @@
 <h1 class="mb-4">@ViewBag.Title</h1>
 <div class="col-md-6">
     <form asp-action="Edit" class="form-horizontal p-4 bg-light rounded shadow-sm">
+        @Html.AntiForgeryToken()
         <div class="mb-3">
             <h4>Select Customer</h4>
             <input type="hidden" asp-for="ReservationId" />
