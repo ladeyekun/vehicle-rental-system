@@ -9,18 +9,17 @@
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="ReviewId" />
 
-    <div class="form-group mb-3">
+    <div class="mb-3">
         <label asp-for="Message" class="form-label"></label>
-        <input asp-for="Message" class="form-control" />
+        <textarea asp-for="Message" class="form-control"></textarea>
         <span asp-validation-for="Message" class="text-danger"></span>
     </div>
 
-    <div class="form-group mb-3">
-        <label asp-for="ReservationId" class="form-label"></label>
-        <input asp-for="ReservationId" class="form-control" />
+    <div class="mb-3">
+        <label asp-for="ReservationId" class="form-label">Reservation</label>
+        <select asp-for="ReservationId" asp-items="ViewBag.Reservations" class="form-select"></select>
         <span asp-validation-for="ReservationId" class="text-danger"></span>
     </div>
-
 
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
