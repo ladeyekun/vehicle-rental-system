@@ -23,6 +23,7 @@ namespace Vehicle_Rental_System.Controllers
             return View(customers);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             if (id <= 0)
@@ -34,16 +35,10 @@ namespace Vehicle_Rental_System.Controllers
             {
                 return NotFound();
             }
-            List<Reservation> reservations = await _reservationService.GetReservations();
-            List<History> histories = await _historyService.GetAllHistoriesAsync();
-
-            ViewBag.Customer = customer;
-            ViewBag.Reservations = reservations;
-            ViewBag.Histories = histories;
-
-            return View();
+            return View(customer);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -55,7 +50,7 @@ namespace Vehicle_Rental_System.Controllers
             if (ModelState.IsValid)
             {
                 await _customerService.AddCustomerAsync(customer);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(customer);
         }
@@ -67,13 +62,11 @@ namespace Vehicle_Rental_System.Controllers
             {
                 return NotFound();
             }
-
             Customer customer = await _customerService.GetCustomerByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();
             }
-
             return View(customer);
         }
 
@@ -84,11 +77,10 @@ namespace Vehicle_Rental_System.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 await _customerService.UpdateCustomerAsync(customer);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(customer);
         }
@@ -100,13 +92,11 @@ namespace Vehicle_Rental_System.Controllers
             {
                 return NotFound();
             }
-
             Customer customer = await _customerService.GetCustomerByIdAsync(id);
             if (customer == null)
             {
                 return NotFound();
             }
-
             return View(customer);
         }
 
@@ -115,7 +105,7 @@ namespace Vehicle_Rental_System.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _customerService.DeleteCustomerAsync(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
     }
 }
