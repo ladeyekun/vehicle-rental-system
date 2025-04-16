@@ -9,23 +9,47 @@ namespace Vehicle_Rental_System.BLL {
         public PaymentService(PaymentRepository paymentRepository) {
             _paymentRepository = paymentRepository;
         }
-    
-        public List<Payment> GetPayments() {
-            return _paymentRepository.GetPayments();
+
+        // Get all payments
+        public async Task<List<Payment>> GetAllPaymentsAsync() {
+            return await _paymentRepository.GetPaymentsAsync();
         }
 
-        public Payment GetPayment(int id) {
-            return _paymentRepository.GetPayment(id);
+        // Get a specific payment by ID
+        public async Task<Payment?> GetPaymentByIdAsync(int id) {
+            return await _paymentRepository.GetPaymentAsync(id);
         }
 
-        public void AddPayment(Payment payment) {
-            _paymentRepository.AddPayment(payment);
+        // Add a new payment
+        public async Task AddPaymentAsync(Payment payment) {
+            if (payment.Amount < 0) {
+                throw new Exception("Amount cannot be negative.");
+            }
+
+            if (string.IsNullOrWhiteSpace(payment.PaymentMethod)) {
+                throw new Exception("Payment method is required.");
+            }
+
+            await _paymentRepository.AddPaymentAsync(payment);
         }
-        public void UpdatePayment(Payment payment) {
-            _paymentRepository.UpdatePayment(payment);
+
+        // Update an existing payment
+        public async Task UpdatePaymentAsync(Payment payment) {
+            if (payment.Amount < 0) {
+                throw new Exception("Amount cannot be negative.");
+            }
+
+            if (string.IsNullOrWhiteSpace(payment.PaymentMethod)) {
+                throw new Exception("Payment method is required.");
+            }
+
+            await _paymentRepository.EditPaymentAsync(payment);
         }
-        public void DeletePayment(int id) {
-            _paymentRepository.DeletePayment(id);
+
+        // Delete a payment by ID
+        public async Task DeletePaymentAsync(int id) {
+            await _paymentRepository.DeletePaymentAsync(id);
         }
+
     }
 }
