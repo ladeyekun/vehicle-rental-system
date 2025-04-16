@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Vehicle\**" />
-    <Content Remove="Views\Vehicle\**" />
-    <EmbeddedResource Remove="Views\Vehicle\**" />
-    <None Remove="Views\Vehicle\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\Payment\Details.cshtml" />
   </ItemGroup>
 
