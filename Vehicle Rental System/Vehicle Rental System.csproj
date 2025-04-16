@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Vehicle\**" />
+    <Content Remove="Views\Vehicle\**" />
+    <EmbeddedResource Remove="Views\Vehicle\**" />
+    <None Remove="Views\Vehicle\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Payment\Details.cshtml" />
   </ItemGroup>
 
@@ -24,10 +31,6 @@
     <ProjectReference Include="..\Vehicle Rental System.BLL\Vehicle Rental System.BLL.csproj" />
     <ProjectReference Include="..\Vehicle Rental System.DAL\Vehicle Rental System.DAL.csproj" />
     <ProjectReference Include="..\Vehicle Rental System.Model\Vehicle Rental System.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Vehicle\" />
   </ItemGroup>
 
 </Project>
