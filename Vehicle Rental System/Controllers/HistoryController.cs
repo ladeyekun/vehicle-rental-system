@@ -41,13 +41,9 @@ namespace Vehicle_Rental_System.Controllers {
                     ModelState.AddModelError("Error", ex.Message);
                 }
             }
-<<<<<<< HEAD
-            ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
-=======
             ViewBag.Customers = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
->>>>>>> 58ab406f19c916b7a61101d931a7ab7bf017a73b
+
             return View(history);
         }
 
@@ -58,13 +54,9 @@ namespace Vehicle_Rental_System.Controllers {
             if (history == null) {
                 return NotFound();
             }
-<<<<<<< HEAD
-            ViewBag.Users = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
-=======
+
             ViewBag.Users = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
->>>>>>> 58ab406f19c916b7a61101d931a7ab7bf017a73b
             return View(history);
         }
 
@@ -86,13 +78,8 @@ namespace Vehicle_Rental_System.Controllers {
 
                     await _historyService.UpdateHistoryAsync(oldHistory);
 
-<<<<<<< HEAD
-                    ViewBag.Customers = _customerService.GetCustomers();
-                    ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
-=======
                     ViewBag.Customers = await _customerService.GetAllCustomersAsync();
                     ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
->>>>>>> 58ab406f19c916b7a61101d931a7ab7bf017a73b
                     ViewBag.SuccessMessage = "History updated successfully!";
                     return View(oldHistory);
                 }
@@ -100,14 +87,9 @@ namespace Vehicle_Rental_System.Controllers {
                     ModelState.AddModelError("Error", ex.Message);
                 }
             }
-
-<<<<<<< HEAD
-            ViewBag.Customers = _customerService.GetCustomers();
-            ViewBag.Vehicles = _vehicleService.GetVehiclesAsync();
-=======
             ViewBag.Customers = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
->>>>>>> 58ab406f19c916b7a61101d931a7ab7bf017a73b
+
             return View(history);
         }
 
