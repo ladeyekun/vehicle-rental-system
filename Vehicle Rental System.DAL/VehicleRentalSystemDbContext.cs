@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
-    public class VehicleRentalSystemDbContext : DbContext{
+    public class VehicleRentalSystemDbContext : IdentityDbContext<IdentityUser> {
         public VehicleRentalSystemDbContext(DbContextOptions<VehicleRentalSystemDbContext> options) : base(options) { }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<History> Histories { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vehicle_Rental_System.BLL;
 using Vehicle_Rental_System.Model;
@@ -16,11 +17,13 @@ namespace Vehicle_Rental_System.Controllers {
             _vehicleService = vehicleService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index() {
             List<Reservation> reservations = await _reservationService.GetReservations();
             return View(reservations);
         }
 
+        [Authorize(Roles = "Admin, Support")]
         [HttpGet]
         public async Task<IActionResult> Create() {
             ViewBag.Title = "Create Reservation";
@@ -41,6 +44,7 @@ namespace Vehicle_Rental_System.Controllers {
         }
 
 
+        [Authorize(Roles = "Admin, Support")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ReservationViewModel model) {
@@ -80,6 +84,7 @@ namespace Vehicle_Rental_System.Controllers {
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Detail(int id) {
             Reservation reservation = await _reservationService.GetReservation(id);
             if (reservation == null) {
@@ -90,6 +95,7 @@ namespace Vehicle_Rental_System.Controllers {
             return View(reservation);
         }
 
+        [Authorize(Roles = "Admin, Support")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id) {
             Reservation reservation = await _reservationService.GetReservation(id);
@@ -119,6 +125,8 @@ namespace Vehicle_Rental_System.Controllers {
             return View(reservationViewModel);
         }
 
+
+        [Authorize(Roles = "Admin, Support")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ReservationViewModel model) {
@@ -163,6 +171,7 @@ namespace Vehicle_Rental_System.Controllers {
             return View(reservationViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id) {
             Reservation reservation = await _reservationService.GetReservation(id);
