@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using Vehicle_Rental_System.Model
+
+@model Payment
+
+<h2>Payment Registration</h2>
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="PaymentDate"></label>
+        <input asp-for="PaymentDate" type="datetime-local" />
+        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="PaymentMethod"></label>
+        <input asp-for="PaymentMethod" />
+        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReservationId" class="control-label">Select Reservation</label>
+        <select asp-for="ReservationId" class="form-control" required>
+            <option value="">Select a Reservation</option>
+            @foreach (Reservation reservation in ViewBag.Reservations)
+            {
+                <option value="@reservation.ReservationId">
+                    @reservation.ReservationId - @reservation.Customer?.CustomerName
+                </option>
+            }
+        </select>
+        <span asp-validation-for="ReservationId" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Save Payment</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
