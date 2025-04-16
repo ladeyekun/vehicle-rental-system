@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Customer>
+@using Vehicle_Rental_System.Model
+
 @{
+    ViewBag.Title = "Customer List";
 }
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New Customer", "Create")
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => customer.CustomerName)</td>
+                <td>@Html.DisplayFor(modelItem => customer.Email)</td>
+                <td>@Html.DisplayFor(modelItem => customer.Phone)</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = customer.CustomerId }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }) |
+                    @using (Html.BeginForm("Delete", "Customer", new { id = customer.CustomerId }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this customer?');" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
