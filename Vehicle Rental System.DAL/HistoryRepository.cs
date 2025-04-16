@@ -1,4 +1,6 @@
-﻿using Vehicle_Rental_System.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Vehicle_Rental_System.DAL.Migrations;
+using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
     public class HistoryRepository {
@@ -8,27 +10,34 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        public List<History> GetHistories() {
-            return _context.Histories.ToList();
+        // List all history records
+        public async Task<List<History>> GetHistoriesAsync() {
+            return await _context.Histories.ToListAsync();
         }
 
-        public History GetHistory(int id) {
-            return _context.Histories.Find(id);
+        // Add a new history record
+        public async Task AddHistoryAsync(History history) {
+            await _context.Histories.AddAsync(history);
+            await _context.SaveChangesAsync();
         }
 
-        public void AddHistory(History history) {
-            _context.Histories.Add(history);
-            _context.SaveChanges();
-        }
-        public void UpdateHistory(History history) {
+        // Update an existing history record
+        public async Task EditHistoryAsync(History history) {
             _context.Histories.Update(history);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void DeleteHistory(int id) {
-            History history = _context.Histories.Find(id);
+
+        // Get a specific history record by ID
+        public async Task<History?> GetHistoryAsync(int id) {
+            return await _context.Histories.FirstOrDefaultAsync(h => h.RentalHistoryId == id);
+        }
+
+        // Delete a history record by ID
+        public async Task DeleteHistoryAsync(int id) {
+            History? history = await _context.Histories.FirstOrDefaultAsync(h => h.RentalHistoryId == id);
             if (history != null) {
                 _context.Histories.Remove(history);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

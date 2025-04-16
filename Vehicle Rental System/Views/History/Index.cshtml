@@ -1,0 +1,45 @@
+﻿@using Vehicle_Rental_System.Model
+@model IEnumerable<History>
+
+<h1>Rental History</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            @* <th>Distance</th> *@
+            @* <th>User ID</th> *@
+            <th>Vehicle ID</th>
+            <th>Customer ID</th>
+            @* <th>Actions</th> *@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (History rentalHistory in Model)
+        {
+            <tr>
+                <td>@rentalHistory.StartDate.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@rentalHistory.EndDate.ToString("yyyy-MM-dd HH:mm")</td>
+                @* <td>@history.Distance</td> *@
+                <td>@rentalHistory.CustomerId</td>
+                <td>@rentalHistory.VehicleId</td>
+                <td>
+                    <!-- Details Button -->
+                    <button type="button" onclick="location.href='/History/Details/@rentalHistory.RentalHistoryId'">Details</button>
+
+                    <!-- Edit Link -->
+                    <a asp-action="Edit" asp-route-id="@rentalHistory.RentalHistoryId">Edit</a>
+
+                    <!-- Delete Form -->
+                    <form asp-action="Delete" asp-route-id="@rentalHistory.RentalHistoryId" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Create New History Record Button -->
+<button type="button" onclick="location.href='/History/Create'">Create New History</button>

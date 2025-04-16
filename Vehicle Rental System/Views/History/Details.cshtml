@@ -1,0 +1,12 @@
+﻿@model Vehicle_Rental_System.Model.History
+
+<h2>History Details</h2>
+
+<p>Rental History ID: @Model.RentalHistoryId</p>
+<p>Start Date: @Model.StartDate.ToString("yyyy-MM-dd HH:mm")</p>
+<p>End Date: @Model.EndDate.ToString("yyyy-MM-dd HH:mm")</p>
+<p>Total Cost: $@Model.TotalCost.ToString("F2")</p>
+<p>Customer: @Model.Customer?.CustomerName</p>
+<p>Vehicle: @Model.Vehicle?.Brand @Model.Vehicle?.Model</p>
+
+<a asp-controller="History" asp-action="Index">Back to List</a>
