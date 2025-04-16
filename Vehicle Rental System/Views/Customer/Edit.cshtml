@@ -1,5 +1,64 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Vehicle_Rental_System.Model.Customer
+
 @{
+    ViewBag.Title = "Edit Customer";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal">
+        <h4>Customer</h4>
+        <hr />
+        @Html.HiddenFor(model => model.CustomerId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName)
+            @Html.EditorFor(model => model.CustomerName)
+            @Html.ValidationMessageFor(model => model.CustomerName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone)
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerGender)
+            @Html.DropDownListFor(
+                     model => model.CustomerGender,
+                     Enum.GetValues(typeof(Vehicle_Rental_System.Model.Customer.Gender))
+                     .Cast<Vehicle_Rental_System.Model.Customer.Gender>()
+                     .Select(g => new SelectListItem
+                     {
+                        Text = g.ToString(),
+                        Value = g.ToString()
+                     }),
+                     "Select Customer Gender",
+                     new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CustomerGender)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateOfBirth)
+            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DriversLicenseId)
+            @Html.EditorFor(model => model.DriversLicenseId)
+            @Html.ValidationMessageFor(model => model.DriversLicenseId)
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" />
+        </div>
+    </div>
 }

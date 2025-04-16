@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Vehicle>
+@using Vehicle_Rental_System.Model
+
+<h1>Vehicle List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Vehicle</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Type</th>
+            <th>Rental Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Vehicle vehicle in Model)
+        {
+            <tr>
+                <td>@vehicle.Brand</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.Type</td>
+                <td>@vehicle.RentalPrice</td>
+                <td>@vehicle.VehicleAvailabilityStatus</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@vehicle.VehicleId" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@vehicle.VehicleId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@vehicle.VehicleId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

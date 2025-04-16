@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vehicle_Rental_System.DAL;
 using Vehicle_Rental_System.Model;
 
 namespace Vehicle_Rental_System.DAL {
