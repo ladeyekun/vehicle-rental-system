@@ -1,5 +1,61 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using Vehicle_Rental_System.Model
+@model Vehicle_Rental_System.Model.Vehicle
+
+<h1>Edit Vehicle</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="VehicleId" />
+
+    <div class="form-group">
+        <label asp-for="Brand" class="control-label"></label>
+        <input asp-for="Brand" class="form-control" />
+        <span asp-validation-for="Brand" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model" class="control-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Type" class="control-label"></label>
+        <input asp-for="Type" class="form-control" />
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RentalPrice" class="control-label"></label>
+        <input asp-for="RentalPrice" class="form-control" />
+        <span asp-validation-for="RentalPrice" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="VehicleAvailabilityStatus" class="control-label"></label>
+        <select asp-for="VehicleAvailabilityStatus" asp-items="Html.GetEnumSelectList<Vehicle_Rental_System.Model.VehicleAvailabilityStatus>()" class="form-control">
+            <option value="">Select Availability</option>
+        </select>
+        <span asp-validation-for="VehicleAvailabilityStatus" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Mileage" class="control-label"></label>
+        <input asp-for="Mileage" class="form-control" />
+        <span asp-validation-for="Mileage" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LocationId" class="control-label"></label>
+        <select asp-for="LocationId" class="form-control">
+            <option value="">Please Select Location</option>
+            @foreach (Location location in ViewBag.Locations as List<Location>)
+            {
+                <option value="@location.LocationId">@location.Name</option>
+            }
+        </select>
+        <span asp-validation-for="LocationId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
