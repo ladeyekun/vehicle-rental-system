@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vehicle_Rental_System.BLL;
 using Vehicle_Rental_System.Model;
+using Vehicle_Rental_System.Model.ViewModel;
 
 namespace Vehicle_Rental_System.Controllers
 {
