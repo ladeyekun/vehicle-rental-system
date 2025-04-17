@@ -24,13 +24,12 @@ namespace Vehicle_Rental_System.Web.Controllers
         public IActionResult Details(int id)
         {
             var location = _locationService.GetLocationById(id);
-            if (location == null)
-                return NotFound();
-
+            if (location == null) return NotFound();
             return View(location);
         }
 
         // GET: /Location/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -39,7 +38,7 @@ namespace Vehicle_Rental_System.Web.Controllers
         // POST: /Location/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Location location)
+        public IActionResult Create([Bind("Name")] Location location)
         {
             if (!ModelState.IsValid)
             {
@@ -51,12 +50,11 @@ namespace Vehicle_Rental_System.Web.Controllers
         }
 
         // GET: /Location/Edit/5
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var location = _locationService.GetLocationById(id);
-            if (location == null)
-                return NotFound();
-
+            if (location == null) return NotFound();
             return View(location);
         }
 
@@ -75,12 +73,11 @@ namespace Vehicle_Rental_System.Web.Controllers
         }
 
         // GET: /Location/Delete/5
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var location = _locationService.GetLocationById(id);
-            if (location == null)
-                return NotFound();
-
+            if (location == null) return NotFound();
             return View(location);
         }
 
