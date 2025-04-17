@@ -1,12 +1,65 @@
-﻿@model Vehicle_Rental_System.Model.Customer
+﻿@using Vehicle_Rental_System.Model
+@model Vehicle_Rental_System.Model.Customer
 
 @{
     ViewBag.Title = "Customer Details & Information";
 }
 
+<!-- 🔹 Inline CSS Styling -->
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        padding: 20px;
+    }
+
+    h2, h4 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .details-container {
+        background-color: white;
+        padding: 25px;
+        border-radius: 8px;
+        max-width: 600px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .dl-horizontal dt {
+        font-weight: bold;
+        float: left;
+        width: 160px;
+        clear: left;
+        margin-bottom: 10px;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 170px;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    .action-links {
+        margin-top: 20px;
+    }
+</style>
+
 <h2>@ViewBag.Title</h2>
 
-<div>
+<div class="details-container">
     <h4>Customer</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -28,9 +81,42 @@
         <dt>Driver's License ID</dt>
         <dd>@Model.DriversLicenseId</dd>
     </dl>
+
+    <!-- Reservation Section -->
+
+    <h4>Reservations</h4>
+    @if (Model.Reservations != null && Model.Reservations.Any())
+    {
+        <ul>
+            @foreach (Reservation reservation in Model.Reservations)
+            {
+                <li>Reservation ID: @reservation.ReservationId, Date: @reservation.StartDate.ToShortDateString() - @reservation.EndDate.ToShortDateString()</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No reservations found for this customer.</p>
+    }
+
+    <!-- History Section -->
+    <h4>Rental History</h4>
+    @if (Model.Histories != null && Model.Histories.Any())
+    {
+        <ul>
+            @foreach (History history in Model.Histories)
+            {
+                <li>History ID: @history.RentalHistoryId, Total Cost: @history.TotalCost.ToString("C")</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No rental history found for this customer.</p>
+    }
 </div>
 
-<div>
+<div class="action-links">
     @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |
     @Html.ActionLink("Back to List", "Index")
 </div>

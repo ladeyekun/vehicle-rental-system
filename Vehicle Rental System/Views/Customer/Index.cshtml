@@ -5,6 +5,83 @@
     ViewBag.Title = "Customer List";
 }
 
+<!-- 🔹 Inline CSS Styles -->
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+    }
+
+    p a {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 8px 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        p a:hover {
+            background-color: #218838;
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    input[type="submit"] {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #c82333;
+        }
+</style>
+
 <h2>@ViewBag.Title</h2>
 
 <p>
@@ -21,12 +98,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var customer in Model)
+        @foreach (Customer customer in Model)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => customer.CustomerName)</td>
                 <td>@Html.DisplayFor(modelItem => customer.Email)</td>
                 <td>@Html.DisplayFor(modelItem => customer.Phone)</td>
+                <!-- Display the new Address property if added -->
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = customer.CustomerId }) |
                     @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }) |
@@ -40,3 +118,4 @@
         }
     </tbody>
 </table>
+
