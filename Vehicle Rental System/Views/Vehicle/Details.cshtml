@@ -1,39 +1,39 @@
-﻿@model Vehicle_Rental_System.Model.Vehicle
+﻿@using Vehicle_Rental_System.Model
+@model Vehicle
 
 @{
-    ViewBag.Title = "Vehicle Details";
+    ViewData["Title"] = "Vehicle Details";
 }
 
-<h1>@Model.Brand @Model.Model</h1>
+<h2>Vehicle Details</h2>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Brand</dt>
+    <dd class="col-sm-9">@Model.Brand</dd>
+
+    <dt class="col-sm-3">Model</dt>
+    <dd class="col-sm-9">@Model.Model</dd>
+
+    <dt class="col-sm-3">Type</dt>
+    <dd class="col-sm-9">@Model.Type</dd>
+
+    <dt class="col-sm-3">Rental Price</dt>
+    <dd class="col-sm-9">@Model.RentalPrice.ToString("C")</dd>
+
+    <dt class="col-sm-3">Mileage</dt>
+    <dd class="col-sm-9">@Model.Mileage</dd>
+
+    <dt class="col-sm-3">Availability Status</dt>
+    <dd class="col-sm-9">@Model.VehicleAvailabilityStatus</dd>
+
+    <dt class="col-sm-3">Location</dt>
+    <dd class="col-sm-9">@Model.Location?.Name</dd>
+</dl>
 
 <div>
-    <h3>Vehicle Information</h3>
-    <dl class="row">
-        <dt class="col-sm-2">Brand</dt>
-        <dd class="col-sm-10">@Model.Brand</dd>
-
-        <dt class="col-sm-2">Model</dt>
-        <dd class="col-sm-10">@Model.Model</dd>
-
-        <dt class="col-sm-2">Type</dt>
-        <dd class="col-sm-10">@Model.Type</dd>
-
-        <dt class="col-sm-2">Rental Price</dt>
-        <dd class="col-sm-10">@Model.RentalPrice</dd>
-
-        <dt class="col-sm-2">Status</dt>
-        <dd class="col-sm-10">@Model.VehicleAvailabilityStatus</dd>
-
-        <dt class="col-sm-2">Mileage</dt>
-        <dd class="col-sm-10">@Model.Mileage</dd>
-
-        <dt class="col-sm-2">Location ID</dt>
-        <dd class="col-sm-10">@Model.LocationId</dd>
-    </dl>
-</div>
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.VehicleId" class="btn btn-warning">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.VehicleId" class="btn btn-primary">Edit</a>
     <a asp-action="Delete" asp-route-id="@Model.VehicleId" class="btn btn-danger">Delete</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

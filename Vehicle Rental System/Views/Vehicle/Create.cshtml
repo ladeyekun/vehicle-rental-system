@@ -1,55 +1,54 @@
-﻿@using Vehicle_Rental_System.Model
-@model Vehicle_Rental_System.Model.Vehicle
-
-<h1>Create New Vehicle</h1>
+﻿@using Vehicle_Rental_System.Model.ViewModel
+@model VehicleViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Vehicle_Rental_System.Model
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="Brand" class="control-label"></label>
-        <input asp-for="Brand" class="form-control" />
-        <span asp-validation-for="Brand" class="text-danger"></span>
+        @Html.LabelFor(m => m.Brand)
+        @Html.TextBoxFor(m => m.Brand, new { @class = "form-control" })
     </div>
+
     <div class="form-group">
-        <label asp-for="Model" class="control-label"></label>
-        <input asp-for="Model" class="form-control" />
-        <span asp-validation-for="Model" class="text-danger"></span>
+        @Html.LabelFor(m => m.Model)
+        @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
     </div>
+
     <div class="form-group">
-        <label asp-for="Type" class="control-label"></label>
-        <input asp-for="Type" class="form-control" />
-        <span asp-validation-for="Type" class="text-danger"></span>
+        @Html.LabelFor(m => m.Type)
+        @Html.TextBoxFor(m => m.Type, new { @class = "form-control" })
     </div>
+
     <div class="form-group">
-        <label asp-for="RentalPrice" class="control-label"></label>
-        <input asp-for="RentalPrice" type="number" class="form-control" step="any" />
-        <span asp-validation-for="RentalPrice" class="text-danger"></span>
+        @Html.LabelFor(m => m.RentalPrice)
+        @Html.TextBoxFor(m => m.RentalPrice, new { @class = "form-control", type = "number" })
     </div>
+
     <div class="form-group">
         <label asp-for="VehicleAvailabilityStatus" class="control-label"></label>
-        <select asp-for="VehicleAvailabilityStatus" asp-items="Html.GetEnumSelectList<VehicleAvailabilityStatus>()" class="form-control">
-            <option value="">Please select</option>
-        </select>
-        <span asp-validation-for="VehicleAvailabilityStatus" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LocationId" class="control-label"></label>
-        <select asp-for="LocationId" class="form-control">
-            <!-- Populate Location options dynamically -->
-            @foreach (Location location in ViewBag.Locations as List<Location>)
-            {
-                <option value="@location.LocationId">@location.Name</option>
-            }
-        </select>
-        <span asp-validation-for="LocationId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Mileage" class="control-label"></label>
-        <input asp-for="Mileage" type="number" class="form-control" />
-        <span asp-validation-for="Mileage" class="text-danger"></span>
+        <select asp-for="VehicleAvailabilityStatus" asp-items="Html.GetEnumSelectList<VehicleAvailabilityStatus>()" class="form-control"></select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Mileage)
+        @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control", type = "number" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedLocationId, "Location")
+        @Html.DropDownListFor(m => m.SelectedLocationId, Model.AvailableLocations, "Select Location", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedReservationIds, "Reservations")
+        @Html.ListBoxFor(m => m.SelectedReservationIds, Model.AvailableReservations, new { @class = "form-control", multiple = "multiple" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedHistoryIds, "Histories")
+        @Html.ListBoxFor(m => m.SelectedHistoryIds, Model.AvailableHistories, new { @class = "form-control", multiple = "multiple" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
-
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
 
