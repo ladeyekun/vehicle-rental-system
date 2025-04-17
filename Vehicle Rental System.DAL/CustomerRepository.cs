@@ -11,48 +11,125 @@ namespace Vehicle_Rental_System.DAL {
             _context = context;
         }
 
-        public async Task<List<Customer>> GetCustomers() {
-            return await _context.Customers.ToListAsync();
+        // Get All Customer
+        public async Task<List<Customer>> GetCustomers()
+        {
+            return await _context.Customers
+                .Include(c => c.Reservations)
+                .Include(c => c.Histories)
+                .ToListAsync();
         }
 
-        // Get Customer By Id
-
+        // Get
         public async Task<Customer> GetByIdAsync(int id)
         {
-            Customer customer = await _context.Customers
+            return await _context.Customers
                 .Include(c => c.Reservations)
                 .Include(c => c.Histories)
                 .FirstOrDefaultAsync(c => c.CustomerId == id);
-
-            return customer;
         }
 
-        // Add New Customer
-
-        public async Task AddAsync(Customer customer)
+        // Add
+        public async Task AddAsync(Customer customer, List<int> reservationIds, List<int> historyIds)
         {
+            customer.Reservations = new List<Reservation>();
+            customer.Histories = new List<History>();
+
+            foreach (int resId in reservationIds)
+            {
+                Reservation reservation = await _context.Reservations.FindAsync(resId);
+                if (reservation != null)
+                {
+                    customer.Reservations.Add(reservation);
+                }
+            }
+            foreach (int histId in historyIds)
+            {
+                History history = await _context.Histories.FindAsync(histId);
+                if (history != null)
+                {
+                    customer.Histories.Add(history);
+                }
+            }
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
         }
 
-        // Update Cuntomer Info
 
-        public async Task UpdateAsync(Customer customer)
+        // Update
+        public async Task UpdateAsync(Customer customer, List<int> reservationIds, List<int> historyIds)
         {
-            _context.Customers.Update(customer);
+            Customer existingCustomer = await _context.Customers
+                .Include(c => c.Reservations)
+                .Include(c => c.Histories)
+                .FirstOrDefaultAsync(c => c.CustomerId == customer.CustomerId);
+
+            if (existingCustomer == null)
+            {
+                throw new ArgumentException("Customer not found");
+            }
+
+            existingCustomer.CustomerName = customer.CustomerName;
+            existingCustomer.Email = customer.Email;
+            existingCustomer.Phone = customer.Phone;
+            existingCustomer.CustomerGender = customer.CustomerGender;
+            existingCustomer.DateOfBirth = customer.DateOfBirth;
+            existingCustomer.DriversLicenseId = customer.DriversLicenseId;
+
+            existingCustomer.Reservations.Clear();
+            foreach (int resId in reservationIds)
+            {
+                Reservation reservation = await _context.Reservations.FindAsync(resId);
+                if (reservation != null)
+                {
+                    existingCustomer.Reservations.Add(reservation);
+                }
+            }
+
+            existingCustomer.Histories.Clear();
+            foreach (int histId in historyIds)
+            {
+                History history = await _context.Histories.FindAsync(histId);
+                if (history != null)
+                {
+                    existingCustomer.Histories.Add(history);
+                }
+            }
             await _context.SaveChangesAsync();
         }
 
-        // Delete Customer
 
+        // Delete 
         public async Task DeleteAsync(int id)
         {
             Customer customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
+            if (customer == null)
             {
-                _context.Customers.Remove(customer);
-                await _context.SaveChangesAsync();
+                throw new ArgumentException("Customer not found");
             }
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<List<Reservation>> GetReservationsAsync()
+        {
+            return await _context.Reservations.ToListAsync();
+        }
+
+        public async Task<List<History>> GetHistoriesAsync()
+        {
+            return await _context.Histories.ToListAsync();
+        }
+
+        public async Task<Reservation> GetReservationByIdAsync(int id)
+        {
+            return await _context.Reservations.FindAsync(id);
+        }
+
+        public async Task<History> GetHistoryByIdAsync(int id)
+        {
+            return await _context.Histories.FindAsync(id);
         }
     }
 }
