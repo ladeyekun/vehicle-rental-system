@@ -106,13 +106,9 @@
                 <td>@Html.DisplayFor(modelItem => customer.Phone)</td>
                 <!-- Display the new Address property if added -->
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = customer.CustomerId }) |
-                    @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }) |
-                    @using (Html.BeginForm("Delete", "Customer", new { id = customer.CustomerId }, FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this customer?');" />
-                    }
+                    @Html.ActionLink("Details", "Details", new { id = customer.CustomerId }, new { @class = "btn btn-danger" }) ||
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }, new { @class = "btn btn-danger" }) ||
+                    @Html.ActionLink("Delete", "Delete", new { id = customer.CustomerId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
