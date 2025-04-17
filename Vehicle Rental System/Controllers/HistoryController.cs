@@ -78,7 +78,6 @@ namespace Vehicle_Rental_System.Controllers {
 
                     ViewBag.Customers = await _customerService.GetAllCustomersAsync();
                     ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
-
                     ViewBag.SuccessMessage = "History updated successfully!";
                     return View(oldHistory);
                 }
