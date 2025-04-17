@@ -3,10 +3,6 @@
 
 <h2>Rental History</h2>
 
-<p>
-    <button type="button" onclick="location.href='/History/Create'">Create New History</button>
-</p>
-
 <table class="table">
     <thead>
         <tr>
@@ -24,12 +20,9 @@
                 <td>@rentalHistory.EndDate.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>@rentalHistory.CustomerId</td>
                 <td>@rentalHistory.VehicleId</td>
-                <td>
-                    <!-- Details Button -->
-                    <button type="button" onclick="location.href='/History/Details/@rentalHistory.RentalHistoryId'">Details</button>
-
-                    <!-- Edit Link -->
-                    <a asp-action="Edit" asp-route-id="@rentalHistory.RentalHistoryId">Edit</a>
+                <td class="flex">
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = @rentalHistory.RentalHistoryId })">Edit</a>
+                    <a class="btn btn-secondary" href="@Url.Action("Details", new { id = @rentalHistory.RentalHistoryId })">Details</a>
 
                     <!-- Delete Form -->
                     <form asp-action="Delete" asp-route-id="@rentalHistory.RentalHistoryId" method="post" style="display:inline;">
@@ -41,3 +34,4 @@
     </tbody>
 </table>
 
+<a class="btn btn-success" href="@Url.Action("Create")">Create New History</a>

@@ -4,27 +4,28 @@
 
 <h2>Payment Registration</h2>
 
-<form asp-action="Create">
-    <div>
-        <label asp-for="Amount"></label>
-        <input asp-for="Amount" />
+<div class="col-md-6">
+    <form asp-action="Create" class="form-horizontal p-4 bg-light rounded shadow-sm">
+    <div class="mb-3">
+        <label asp-for="Amount" class="form-label fw-bold"></label>
+        <input asp-for="Amount" class="form-control" />
         <span asp-validation-for="Amount" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="PaymentDate"></label>
-        <input asp-for="PaymentDate" type="datetime-local" />
+    <div class="mb-3">
+        <label asp-for="PaymentDate" class="form-label fw-bold"></label>
+            <input asp-for="PaymentDate" type="datetime-local" class="form-control" />
         <span asp-validation-for="PaymentDate" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="PaymentMethod"></label>
-        <input asp-for="PaymentMethod" />
+    <div class="mb-3">
+        <label asp-for="PaymentMethod" class="form-label fw-bold"></label>
+            <input asp-for="PaymentMethod" class="form-control" />
         <span asp-validation-for="PaymentMethod" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="ReservationId" class="control-label">Select Reservation</label>
+    <div class="mb-3">
+        <label asp-for="ReservationId" class="form-label fw-bold">Select Reservation</label>
         <select asp-for="ReservationId" class="form-control" required>
             <option value="">Select a Reservation</option>
             @foreach (Reservation reservation in ViewBag.Reservations)
@@ -36,10 +37,11 @@
         </select>
         <span asp-validation-for="ReservationId" class="text-danger"></span>
     </div>
-
-    <button type="submit">Save Payment</button>
-</form>
-
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Save Payment</button>
+    </div>
+    </form>
+</div>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

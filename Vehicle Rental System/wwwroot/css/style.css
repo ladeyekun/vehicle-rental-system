@@ -1,0 +1,29 @@
+﻿.flex {
+    display: flex;
+    gap: 10px;
+}
+
+table {
+    thead
+    {
+        background-color: #3ABEFF;
+    }
+}
+
+.top-space {
+    margin-top: 20px;
+}
+
+.btns
+{
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btns:hover {
+    background-color: #c82333;
+}

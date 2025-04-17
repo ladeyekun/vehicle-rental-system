@@ -6,6 +6,7 @@
 
 <h2>Create Review</h2>
 <hr />
+<div class="col-md-6">
 <form asp-action="Create" method="post">
 
     <div class="mb-3">
@@ -24,6 +25,7 @@
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

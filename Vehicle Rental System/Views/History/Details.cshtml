@@ -9,4 +9,4 @@
 <p>Customer: @Model.Customer?.CustomerName</p>
 <p>Vehicle: @Model.Vehicle?.Brand @Model.Vehicle?.Model</p>
 
-<a asp-controller="History" asp-action="Index">Back to List</a>
+<a class="btn btn-secondary" href="@Url.Action("Index")">Back to List</a>

@@ -6,9 +6,6 @@
 
 <h2>Location List</h2>
 <hr />
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New Location</a>
-</p>
 
 <table class="table table-striped">
     <thead>
@@ -33,3 +30,5 @@
         }
     </tbody>
 </table>
+
+<a class="btn btn-success" href="@Url.Action("Create")">Add new Location</a>

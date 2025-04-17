@@ -7,27 +7,27 @@
     <form asp-action="Edit" class="form-horizontal p-4 bg-light rounded shadow-sm">
         @Html.AntiForgeryToken()
         <div class="mb-3">
-            <label class="form-label fw-bold">Vehicle</label>
+            <label class="form-label fw-bold">Location</label>
             @Html.DropDownListFor(model => model.SelectedLocationId, Model.Locations, "Select a location", new { id = "locationSelect", @class = "form-control" })
         </div>
         <div class="mb-3">
-            <h4>Select Customer</h4>
+            <label class="form-label fw-bold">Vehicle</label>
             @Html.DropDownListFor(model => model.SelectedVehicleId, Model.Vehicles, "Select a vehicle", new { id = "vehicleSelect", @class = "form-control" })
         </div>
 
         <div class="mb-3">
-            <h4>Select Customer</h4>
+            <label class="form-label fw-bold">Customer</label>
             <input type="hidden" asp-for="ReservationId" />
             @Html.DropDownListFor(model => model.SelectedCustomerId, Model.Customers, "Select a customer", new { @class = "form-control" })
         </div>
         <div class="mb-3">
-            <label asp-for="StartDate" class="form-label fw-bold"></label>
+            <label class="form-label fw-bold">Start Date</label>
             <input asp-for="StartDate" class="form-control" />
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="EndDate" class="form-label fw-bold"></label>
+            <label class="form-label fw-bold">End Date</label>
             <input asp-for="EndDate" class="form-control" />
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
