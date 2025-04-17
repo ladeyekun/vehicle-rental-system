@@ -1,10 +1,15 @@
-﻿@model IEnumerable<Vehicle>
-@using Vehicle_Rental_System.Model
+﻿@using Vehicle_Rental_System.Model
+@model IEnumerable<Vehicle>
+
+@{
+    ViewData["Title"] = "Vehicle Index";
+}
 
 <h1>Vehicle List</h1>
 
+<!-- Add a button to create a new vehicle -->
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New Vehicle</a>
+    <a href="@Url.Action("Create", "Vehicle")" class="btn btn-success">Create New Vehicle</a>
 </p>
 
 <table class="table">
@@ -19,18 +24,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Vehicle vehicle in Model)
+        @foreach (var vehicle in Model)
         {
             <tr>
                 <td>@vehicle.Brand</td>
                 <td>@vehicle.Model</td>
                 <td>@vehicle.Type</td>
-                <td>@vehicle.RentalPrice</td>
+                <td>@vehicle.RentalPrice.ToString("C")</td>
                 <td>@vehicle.VehicleAvailabilityStatus</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@vehicle.VehicleId" class="btn btn-info">Details</a>
-                    <a asp-action="Edit" asp-route-id="@vehicle.VehicleId" class="btn btn-warning">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@vehicle.VehicleId" class="btn btn-danger">Delete</a>
+                    <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }
