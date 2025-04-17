@@ -82,7 +82,7 @@ namespace Vehicle_Rental_System.Controllers
             if (customer == null)
                 return NotFound();
 
-            CustomerViewModel viewModel = new CustomerViewModel
+            var customerViewModel = new CustomerViewModel
             {
                 CustomerId = customer.CustomerId,
                 CustomerName = customer.CustomerName,
@@ -95,8 +95,8 @@ namespace Vehicle_Rental_System.Controllers
                 SelectedHistoryIds = customer.Histories?.Select(h => h.RentalHistoryId).ToList() ?? new()
             };
 
-            await PopulateDropdownsAsync(viewModel);
-            return View(viewModel);
+            await PopulateDropdownsAsync(customerViewModel);
+            return View(customerViewModel);
         }
 
         [HttpPost]
@@ -129,19 +129,36 @@ namespace Vehicle_Rental_System.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id <= 0)
-                return NotFound();
-
             Customer customer = await _customerService.GetCustomerByIdAsync(id);
             if (customer == null)
+            {
                 return NotFound();
+            }
 
-            return View(customer);
+            var customerViewModel = new CustomerViewModel
+            {
+                CustomerId = customer.CustomerId,
+                CustomerName = customer.CustomerName,
+                Email = customer.Email,
+                Phone = customer.Phone,
+                CustomerGender = customer.CustomerGender,
+                DateOfBirth = customer.DateOfBirth,
+                DriversLicenseId = customer.DriversLicenseId
+
+            };
+
+            return View(customerViewModel);
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Customer customer = await _customerService.GetCustomerByIdAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
             await _customerService.DeleteCustomerAsync(id);
             return RedirectToAction("Index");
         }

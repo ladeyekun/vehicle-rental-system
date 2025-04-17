@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var vehicle in Model)
+        @foreach (Vehicle vehicle in Model)
         {
             <tr>
                 <td>@vehicle.Brand</td>
@@ -28,8 +28,8 @@
                 <td>@vehicle.RentalPrice.ToString("C")</td>
                 <td>@vehicle.VehicleAvailabilityStatus</td>
                 <td>
-                    <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-info">Details</a>
-                    <a href="@Url.Action("Edit", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Details", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-info">Details</a> ||
+                    <a href="@Url.Action("Edit", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-primary">Edit</a> ||
                     <a href="@Url.Action("Delete", "Vehicle", new { id = vehicle.VehicleId })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>

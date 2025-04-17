@@ -16,12 +16,19 @@ namespace Vehicle_Rental_System.DAL
 
         public async Task<List<Review>> GetReviewsAsync()
         {
-            return await _context.Reviews.ToListAsync();
+            return await _context.Reviews
+                .Include(r => r.Reservation)
+                    .ThenInclude(res => res.Customer)
+                .ToListAsync();
         }
 
         public async Task<Review> GetReviewAsync(int id)
         {
-            return await _context.Reviews.FindAsync(id);
+
+            return await _context.Reviews
+                .Include(r => r.Reservation)
+                    .ThenInclude(res => res.Customer)
+                .SingleOrDefaultAsync(r => r.ReviewId == id);
         }
 
         public async Task AddReviewAsync(Review review)

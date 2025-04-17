@@ -11,7 +11,7 @@ namespace Vehicle_Rental_System.Controllers
     public class ReviewController : Controller
     {
         private readonly ReviewService _reviewService;
-        private readonly ReservationService _reservationService; 
+        private readonly ReservationService _reservationService;
 
         public ReviewController(ReviewService reviewService, ReservationService reservationService)
         {
@@ -30,24 +30,29 @@ namespace Vehicle_Rental_System.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var review = await _reviewService.GetReviewByIdAsync(id);
-            if (review == null)
-                return NotFound();
-
+            if (review == null) return NotFound();
             return View(review);
+        }
+
+        private async Task PopulateReservationsAsync(int? selectedId = null)
+        {
+            var list = await _reservationService.GetReservations();
+            ViewBag.Reservations = list
+                .Select(r => new SelectListItem
+                {
+                    Value = r.ReservationId.ToString(),
+                    Text = $"Reservation #{r.ReservationId} - {r.Customer?.CustomerName}",
+                    Selected = (r.ReservationId == selectedId)
+                })
+                .ToList();
         }
 
         // GET: /Review/Create
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var reservations = await _reservationService.GetReservations();
-            ViewBag.Reservations = reservations.Select(r => new SelectListItem
-            {
-                Value = r.ReservationId.ToString(),
-                Text = $"Reservation #{r.ReservationId} - {r.Customer?.CustomerName}"
-            }).ToList();
-
-            return View();
+            await PopulateReservationsAsync();
+            return View(new Review());
         }
 
         // POST: /Review/Create
@@ -57,12 +62,7 @@ namespace Vehicle_Rental_System.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var reservations = await _reservationService.GetReservations();
-                ViewBag.Reservations = reservations.Select(r => new SelectListItem
-                {
-                    Value = r.ReservationId.ToString(),
-                    Text = $"Reservation #{r.ReservationId} - {r.Customer?.CustomerName}"
-                }).ToList();
+                await PopulateReservationsAsync(review.ReservationId);
                 return View(review);
             }
 
@@ -76,12 +76,9 @@ namespace Vehicle_Rental_System.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var review = await _reviewService.GetReviewByIdAsync(id);
-            if (review == null)
-                return NotFound();
+            if (review == null) return NotFound();
 
-            var reservations = await _reservationService.GetReservations();
-            ViewBag.Reservations = new SelectList(reservations, "ReservationId", "Customer.CustomerName", review.ReservationId);
-
+            await PopulateReservationsAsync(review.ReservationId);
             return View(review);
         }
 
@@ -90,13 +87,11 @@ namespace Vehicle_Rental_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Review review)
         {
-            if (id != review.ReviewId)
-                return BadRequest();
+            if (id != review.ReviewId) return BadRequest();
 
             if (!ModelState.IsValid)
             {
-                var reservations = await _reservationService.GetReservations();
-                ViewBag.Reservations = new SelectList(reservations, "ReservationId", "Customer.CustomerName", review.ReservationId);
+                await PopulateReservationsAsync(review.ReservationId);
                 return View(review);
             }
 
@@ -109,9 +104,7 @@ namespace Vehicle_Rental_System.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var review = await _reviewService.GetReviewByIdAsync(id);
-            if (review == null)
-                return NotFound();
-
+            if (review == null) return NotFound();
             return View(review);
         }
 

@@ -66,9 +66,10 @@ namespace Vehicle_Rental_System.DAL {
 
             if (existingCustomer == null)
             {
-                throw new ArgumentException("Customer not found");
+                throw new InvalidOperationException("Customer Not Found");
             }
 
+            // Update customer properties
             existingCustomer.CustomerName = customer.CustomerName;
             existingCustomer.Email = customer.Email;
             existingCustomer.Phone = customer.Phone;
@@ -76,27 +77,19 @@ namespace Vehicle_Rental_System.DAL {
             existingCustomer.DateOfBirth = customer.DateOfBirth;
             existingCustomer.DriversLicenseId = customer.DriversLicenseId;
 
-            existingCustomer.Reservations.Clear();
-            foreach (int resId in reservationIds)
-            {
-                Reservation reservation = await _context.Reservations.FindAsync(resId);
-                if (reservation != null)
-                {
-                    existingCustomer.Reservations.Add(reservation);
-                }
-            }
+            var newReservations = await _context.Reservations
+                .Where(r => reservationIds.Contains(r.ReservationId))
+                .ToListAsync();
+            existingCustomer.Reservations = newReservations;
 
-            existingCustomer.Histories.Clear();
-            foreach (int histId in historyIds)
-            {
-                History history = await _context.Histories.FindAsync(histId);
-                if (history != null)
-                {
-                    existingCustomer.Histories.Add(history);
-                }
-            }
+            var newHistories = await _context.Histories
+                .Where(h => historyIds.Contains(h.RentalHistoryId))
+                .ToListAsync();
+            existingCustomer.Histories = newHistories;
+
             await _context.SaveChangesAsync();
         }
+
 
 
         // Delete 

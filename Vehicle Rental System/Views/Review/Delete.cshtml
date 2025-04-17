@@ -22,7 +22,7 @@
     <dd class="col-sm-10">@Model.ReviewDate</dd>
 </dl>
 <hr />
-<form asp-action="DeleteConfirmed" method="post">
+<form asp-action="Delete" method="post">
     <input type="hidden" asp-for="ReviewId" />
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
