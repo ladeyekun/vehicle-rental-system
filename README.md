@@ -44,10 +44,7 @@ Administrators can:
 7. **Location Management**  
    - Manage multiple branch locations  
 
-8. **Reporting & Analytics**  
-   - Revenue, utilization, top‑rented reports  
-
-9. **Role‑Based Access**  
+8. **Role‑Based Access**  
    - Admin vs. UserTypeA vs. UserTypeB  
 
 ## 🔧 Tech Stack
@@ -65,7 +62,6 @@ Administrators can:
 
 ### Prerequisites
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/download) or later  
 - SQL Server (Express/LocalDB) or any EF‑Core provider  
 - Visual Studio 2022 / VS Code  
 
