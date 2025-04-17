@@ -3,6 +3,9 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Vehicle_Rental_System.Model
 
+
+<h2>Edit Vehicle</h2>
+<div class="col-md-6">
 <form asp-action="Create" method="post">
     <div class="form-group">
         @Html.LabelFor(m => m.Brand)
@@ -48,7 +51,8 @@
         @Html.LabelFor(m => m.SelectedHistoryIds, "Histories")
         @Html.ListBoxFor(m => m.SelectedHistoryIds, Model.AvailableHistories, new { @class = "form-control", multiple = "multiple" })
     </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
+        <div class="top-space">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
 </form>
-
+</div>

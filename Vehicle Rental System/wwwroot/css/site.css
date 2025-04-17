@@ -20,3 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+table thead th{
+    background-color: #258cfb;
+}

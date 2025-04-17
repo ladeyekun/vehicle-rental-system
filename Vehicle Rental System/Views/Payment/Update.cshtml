@@ -5,46 +5,47 @@
 }
 
 <h2>Edit Payment</h2>
-<hr />
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="PaymentId" />
+<div class="col-md-6">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="PaymentId" />
 
-    <div class="form-group mb-3">
-        <label asp-for="Amount" class="form-label"></label>
-        <input asp-for="Amount" class="form-control" />
-        <span asp-validation-for="Amount" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Amount" class="form-label fw-bold"></label>
+            <input asp-for="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
 
-    <div class="form-group mb-3">
-        <label asp-for="PaymentDate" class="form-label"></label>
-        <input asp-for="PaymentDate" type="datetime-local" class="form-control" />
-        <span asp-validation-for="PaymentDate" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="PaymentDate" class="form-label fw-bold"></label>
+            <input asp-for="PaymentDate" type="datetime-local" class="form-control" />
+            <span asp-validation-for="PaymentDate" class="text-danger"></span>
+        </div>
 
-    <div class="form-group mb-3">
-        <label asp-for="PaymentMethod" class="form-label"></label>
-        <input asp-for="PaymentMethod" class="form-control" />
-        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="PaymentMethod" class="form-label fw-bold"></label>
+            <input asp-for="PaymentMethod" class="form-control" />
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
 
-    <div class="form-group mb-3">
-        <label asp-for="ReservationId" class="form-label">Select Reservation</label>
-        <select asp-for="ReservationId" class="form-control">
-            <option value="">Select a Reservation</option>
-            @foreach (var reservation in ViewBag.Reservations)
-            {
-                <option value="@reservation.ReservationId" selected="@(reservation.ReservationId == Model.ReservationId)">
-                    @reservation.ReservationId - @reservation.Customer?.CustomerName
-                </option>
-            }
-        </select>
-        <span asp-validation-for="ReservationId" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</form>
-
+        <div class="mb-3">
+            <label asp-for="ReservationId" class="form-label fw-bold">Select Reservation</label>
+            <select asp-for="ReservationId" class="form-control">
+                <option value="">Select a Reservation</option>
+                @foreach (var reservation in ViewBag.Reservations)
+                {
+                    <option value="@reservation.ReservationId" selected="@(reservation.ReservationId == Model.ReservationId)">
+                        @reservation.ReservationId - @reservation.Customer?.CustomerName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="ReservationId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

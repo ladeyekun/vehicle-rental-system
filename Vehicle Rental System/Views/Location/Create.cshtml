@@ -6,7 +6,7 @@
 
 <h2>Create Location</h2>
 <hr />
-
+<div class="col-md-6">
 <form asp-action="Create" method="post">
     <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
@@ -19,7 +19,7 @@
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </form>
-
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
