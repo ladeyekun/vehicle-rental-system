@@ -10,11 +10,13 @@ namespace Vehicle_Rental_System.Controllers {
         private readonly ReservationService _reservationService;
         private readonly CustomerService _customerService;
         private readonly VehicleService _vehicleService;
+        private readonly LocationService _locationService;
 
-        public ReservationController(ReservationService reservationService, CustomerService customerService, VehicleService vehicleService) {
+        public ReservationController(ReservationService reservationService, CustomerService customerService, VehicleService vehicleService, LocationService locationService) {
             _reservationService = reservationService;
             _customerService = customerService;
             _vehicleService = vehicleService;
+            _locationService = locationService;
         }
 
         [Authorize]
@@ -29,20 +31,34 @@ namespace Vehicle_Rental_System.Controllers {
             ViewBag.Title = "Create Reservation";
             List<Customer> customers = await _customerService.GetAllCustomersAsync();
             List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
+            List<Location> locations = _locationService.GetAllLocations();
 
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
+                Locations = locations.Select(l => new SelectListItem {
+                    Value = l.LocationId.ToString(),
+                    Text = l.Name
+                }).ToList(),
                 Customers = customers.Select(c => new SelectListItem {
                     Value = c.CustomerId.ToString(),
                     Text = c.CustomerName
                 }).ToList(),
-                Vehicles = vehicles.Select(v => new SelectListItem {
-                    Value = v.VehicleId.ToString(),
-                    Text = v.Brand + " " + v.Model
-                }).ToList()
+                Vehicles = new List<SelectListItem>()
             };
             return View(reservationViewModel);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetVehiclesByLocation(int locationId) {
+            List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
+            var vehicleList = vehicles
+                .Where(v => v.LocationId == locationId)
+                .Select(v => new {
+                    vehicleId = v.VehicleId,
+                    name = v.Brand + " " + v.Model
+                })
+                .ToList();
+            return Json(vehicleList);
+        }
 
         [Authorize(Roles = "Admin, Support")]
         [HttpPost]
@@ -69,16 +85,18 @@ namespace Vehicle_Rental_System.Controllers {
                 ViewBag.Title = "Create Reservation";
                 List<Customer> customers = await _customerService.GetAllCustomersAsync();
                 List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
+                List<Location> locations = _locationService.GetAllLocations();
 
                 ReservationViewModel reservationViewModel = new ReservationViewModel() {
+                    Locations = locations.Select(l => new SelectListItem {
+                        Value = l.LocationId.ToString(),
+                        Text = l.Name
+                    }).ToList(),
                     Customers = customers.Select(c => new SelectListItem {
                         Value = c.CustomerId.ToString(),
                         Text = c.CustomerName
                     }).ToList(),
-                    Vehicles = vehicles.Select(v => new SelectListItem {
-                        Value = v.VehicleId.ToString(),
-                        Text = v.Brand + " " + v.Model
-                    }).ToList()
+                    Vehicles = new List<SelectListItem>()
                 };
                 return View(reservationViewModel);
             }
@@ -105,19 +123,26 @@ namespace Vehicle_Rental_System.Controllers {
             ViewBag.Title = "Edit Reservation";
             List<Customer> customers = await _customerService.GetAllCustomersAsync();
             List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
+            List<Location> locations = _locationService.GetAllLocations();
+
 
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
                 ReservationId = reservation.ReservationId,
                 SelectedCustomerId = reservation.CustomerId,
                 SelectedVehicleId = reservation.VehicleId,
+                SelectedLocationId = reservation.Vehicle.LocationId,
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
                 Status = reservation.Status,
+                Locations = locations.Select(l => new SelectListItem {
+                    Value = l.LocationId.ToString(),
+                    Text = l.Name
+                }).ToList(),
                 Customers = customers.Select(c => new SelectListItem {
                     Value = c.CustomerId.ToString(),
                     Text = c.CustomerName
                 }).ToList(),
-                Vehicles = vehicles.Select(v => new SelectListItem {
+                Vehicles = vehicles.Where(v => v.LocationId == reservation.Vehicle.LocationId).Select(v => new SelectListItem {
                     Value = v.VehicleId.ToString(),
                     Text = v.Brand + " " + v.Model
                 }).ToList()
@@ -152,18 +177,26 @@ namespace Vehicle_Rental_System.Controllers {
             ViewBag.Title = "Edit Reservation";
             List<Customer> customers = await _customerService.GetAllCustomersAsync();
             List<Vehicle> vehicles = await _vehicleService.GetVehiclesAsync();
+            List<Location> locations = _locationService.GetAllLocations();
+
+
             ReservationViewModel reservationViewModel = new ReservationViewModel() {
-                ReservationId = id,
-                SelectedCustomerId = model.SelectedCustomerId,
-                SelectedVehicleId = model.SelectedVehicleId,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                Status = model.Status,
+                ReservationId = reservation.ReservationId,
+                SelectedCustomerId = reservation.CustomerId,
+                SelectedVehicleId = reservation.VehicleId,
+                SelectedLocationId = reservation.Vehicle.LocationId,
+                StartDate = reservation.StartDate,
+                EndDate = reservation.EndDate,
+                Status = reservation.Status,
+                Locations = locations.Select(l => new SelectListItem {
+                    Value = l.LocationId.ToString(),
+                    Text = l.Name
+                }).ToList(),
                 Customers = customers.Select(c => new SelectListItem {
                     Value = c.CustomerId.ToString(),
                     Text = c.CustomerName
                 }).ToList(),
-                Vehicles = vehicles.Select(v => new SelectListItem {
+                Vehicles = vehicles.Where(v => v.LocationId == reservation.Vehicle.LocationId).Select(v => new SelectListItem {
                     Value = v.VehicleId.ToString(),
                     Text = v.Brand + " " + v.Model
                 }).ToList()

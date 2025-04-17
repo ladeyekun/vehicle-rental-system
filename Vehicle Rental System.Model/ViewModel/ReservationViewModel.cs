@@ -7,6 +7,8 @@ namespace Vehicle_Rental_System.Model.ViewModel {
         public List<SelectListItem>? Customers { get; set; }
         public int SelectedVehicleId { get; set; }
         public List<SelectListItem>? Vehicles { get; set; }
+        public int SelectedLocationId { get; set; }
+        public List<SelectListItem>? Locations { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

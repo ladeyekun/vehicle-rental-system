@@ -7,13 +7,18 @@
     <form asp-action="Edit" class="form-horizontal p-4 bg-light rounded shadow-sm">
         @Html.AntiForgeryToken()
         <div class="mb-3">
-            <h4>Select Customer</h4>
-            <input type="hidden" asp-for="ReservationId" />
-            @Html.DropDownListFor(model => model.SelectedCustomerId, Model.Customers, "Select a customer", new { @class = "form-control" })
+            <label class="form-label fw-bold">Vehicle</label>
+            @Html.DropDownListFor(model => model.SelectedLocationId, Model.Locations, "Select a location", new { id = "locationSelect", @class = "form-control" })
         </div>
         <div class="mb-3">
             <h4>Select Customer</h4>
-            @Html.DropDownListFor(model => model.SelectedVehicleId, Model.Vehicles, "Select a vehicle", new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.SelectedVehicleId, Model.Vehicles, "Select a vehicle", new { id = "vehicleSelect", @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <h4>Select Customer</h4>
+            <input type="hidden" asp-for="ReservationId" />
+            @Html.DropDownListFor(model => model.SelectedCustomerId, Model.Customers, "Select a customer", new { @class = "form-control" })
         </div>
         <div class="mb-3">
             <label asp-for="StartDate" class="form-label fw-bold"></label>
@@ -38,3 +43,21 @@
         </div>
     </form>
 
+    @section Scripts {
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $('#locationSelect').change(function () {
+                var locationId = $(this).val();
+                $('#vehicleSelect').empty();
+
+                if (locationId) {
+                    $.get('/Reservation/GetVehiclesByLocation', { locationId: locationId }, function (data) {
+                        $('#vehicleSelect').append('<option value="">-- Select Vehicle --</option>');
+                        $.each(data, function (i, vehicle) {
+                            $('#vehicleSelect').append('<option value="' + vehicle.vehicleId + '">' + vehicle.name + '</option>');
+                        });
+                    });
+                }
+            });
+        </script>
+    }
