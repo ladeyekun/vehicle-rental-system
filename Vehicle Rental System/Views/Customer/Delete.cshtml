@@ -7,7 +7,6 @@
 
 <!-- 🔹 Inline CSS Styling -->
 
-
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -105,7 +104,7 @@
     </dl>
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Delete", "Customer", new { id = Model.CustomerId }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.CustomerId)
