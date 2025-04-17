@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Vehicle_Rental_System.Model
+
+@model Payment
+
+<h2>Payment Details</h2>
+
+<p><strong>Payment ID:</strong> @Model.PaymentId</p>
+<p><strong>Amount:</strong> $@Model.Amount.ToString("F2")</p>
+<p><strong>Payment Date:</strong> @Model.PaymentDate.ToString("yyyy-MM-dd HH:mm")</p>
+<p><strong>Payment Method:</strong> @Model.PaymentMethod</p>
+<p><strong>Reservation ID:</strong> @Model.ReservationId</p>
+<p><strong>Customer Name:</strong> @Model.Reservation?.Customer?.CustomerName</p>
+
+<a asp-action="Index">Back to List</a>

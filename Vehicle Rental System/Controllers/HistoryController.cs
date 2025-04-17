@@ -43,7 +43,6 @@ namespace Vehicle_Rental_System.Controllers {
             }
             ViewBag.Customers = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
-
             return View(history);
         }
 
@@ -54,7 +53,6 @@ namespace Vehicle_Rental_System.Controllers {
             if (history == null) {
                 return NotFound();
             }
-
             ViewBag.Users = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
             return View(history);
@@ -87,9 +85,9 @@ namespace Vehicle_Rental_System.Controllers {
                     ModelState.AddModelError("Error", ex.Message);
                 }
             }
+
             ViewBag.Customers = await _customerService.GetAllCustomersAsync();
             ViewBag.Vehicles = await _vehicleService.GetVehiclesAsync();
-
             return View(history);
         }
 

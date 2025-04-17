@@ -1,5 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Vehicle_Rental_System.Model
+
+@model IEnumerable<Payment>
+
+<h2>Payments</h2>
+
+<p>
+    <button type="button" onclick="location.href='/Payment/Create'">Create Payment</button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Payment ID</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Payment Method</th>
+            <th>Reservation ID</th>
+            <th>Customer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Payment payment in Model)
+        {
+            <tr>
+                <td>@payment.PaymentId</td>
+                <td>$@payment.Amount.ToString("F2")</td>
+                <td>@payment.PaymentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@payment.PaymentMethod</td>
+                <td>@payment.ReservationId</td>
+                <td>@payment.Reservation?.Customer?.CustomerName</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@payment.PaymentId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@payment.PaymentId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@payment.PaymentId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
