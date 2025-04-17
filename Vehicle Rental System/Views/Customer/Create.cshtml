@@ -1,8 +1,82 @@
-﻿@model Vehicle_Rental_System.Model.Customer
+﻿@using Vehicle_Rental_System.Model
+@using Vehicle_Rental_System.Model.ViewModel
+@model CustomerViewModel
 
 @{
     ViewBag.Title = "Create Customer";
 }
+
+<!-- 🔹 Inline CSS Styling -->
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        padding: 20px;
+    }
+
+    h2, h4 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .form-horizontal {
+        background-color: white;
+        padding: 25px;
+        border-radius: 8px;
+        max-width: 700px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+    }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    hr {
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+</style>
 
 <h2>@ViewBag.Title</h2>
 
@@ -15,21 +89,25 @@
         <h4>Customer</h4>
         <hr />
         @Html.HiddenFor(model => model.CustomerId)
+
         <div class="form-group">
             @Html.LabelFor(model => model.CustomerName)
             @Html.EditorFor(model => model.CustomerName)
             @Html.ValidationMessageFor(model => model.CustomerName)
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Email)
             @Html.EditorFor(model => model.Email)
             @Html.ValidationMessageFor(model => model.Email)
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Phone)
             @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.CustomerGender)
             @Html.DropDownListFor(
@@ -37,24 +115,37 @@
                      Enum.GetValues(typeof(Vehicle_Rental_System.Model.Customer.Gender))
                      .Cast<Vehicle_Rental_System.Model.Customer.Gender>()
                      .Select(g => new SelectListItem
-                     {
-                        Text = g.ToString(),
-                        Value = g.ToString()
-                     }),
+        {
+            Text = g.ToString(),
+            Value = g.ToString()
+        }),
                      "Select Customer Gender",
                      new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CustomerGender)
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfBirth)
             @Html.EditorFor(model => model.DateOfBirth)
             @Html.ValidationMessageFor(model => model.DateOfBirth)
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.DriversLicenseId)
             @Html.EditorFor(model => model.DriversLicenseId)
             @Html.ValidationMessageFor(model => model.DriversLicenseId)
         </div>
+
+        <div class="form-group">
+            @Html.Label("Associated Reservations")
+            @Html.ListBoxFor(model => model.SelectedReservationIds, Model.AvailableReservations, new { @class = "form-control", multiple = "multiple" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Associated Histories")
+            @Html.ListBoxFor(model => model.SelectedHistoryIds, Model.AvailableHistories, new { @class = "form-control", multiple = "multiple" })
+        </div>
+
         <div class="form-group">
             <input type="submit" value="Create" />
         </div>

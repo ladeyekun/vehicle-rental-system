@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehicle_Rental_System.Model.ViewModel
 {
-    class CustomerViewModel
+    public class CustomerViewModel
     {
     }
 }
