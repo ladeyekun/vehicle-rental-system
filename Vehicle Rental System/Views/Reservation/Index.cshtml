@@ -5,7 +5,6 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Reservation ID</th>
 			<th>Customer Name</th>
 			<th>Vehicle Details</th>
 			<th>Start Date</th>
@@ -16,7 +15,6 @@
 	<tbody>
 		@foreach(Reservation reservation in Model){
 			<tr>
-				<td>@reservation.ReservationId</td>
 				<td>@reservation.Customer.CustomerName</td>
 				<td>@reservation.Vehicle.Brand -  @reservation.Vehicle.Model</td>
 				<td>@reservation.StartDate.ToString("MMM dd yyyy")</td>
@@ -24,6 +22,7 @@
 				<td>
 					<a class="btn btn-primary" href="@Url.Action("Edit", new { id = reservation.ReservationId })">Edit</a>
 					<a class="btn btn-secondary" href="@Url.Action("Detail", new { id = reservation.ReservationId })">Detail</a>
+					<a class="btn btn-danger" href="@Url.Action("Delete", new { id = reservation.ReservationId })">Delete</a>
 				</td>
 			</tr>
 		}
